@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1f524488ecfc42e79bb1ad852babc903" Name="Diagram1">
+        <EntityTypeShape EntityType="MuseumModel.Client" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuseumModel.Employee" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuseumModel.Excursion" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuseumModel.Exhibit" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuseumModel.Guide" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuseumModel.Hall" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuseumModel.Registration" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuseumModel.Users" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <AssociationConnector Association="MuseumModel.FK_Excursion_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="MuseumModel.FK_Employee_Hall" ManuallyRouted="false" />
+        <AssociationConnector Association="MuseumModel.FK_Guide_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="MuseumModel.FK_Excursion_Guide" ManuallyRouted="false" />
+        <AssociationConnector Association="MuseumModel.FK_Hall_Excursion" ManuallyRouted="false" />
+        <AssociationConnector Association="MuseumModel.FK_Exhibit_Hall" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,493 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MuseumModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="int" Nullable="false" />
+          <Property Name="First Name" Type="varchar" MaxLength="50" />
+          <Property Name="SecondName" Type="varchar" MaxLength="50" />
+          <Property Name="Last Name" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID_Employee" />
+          </Key>
+          <Property Name="ID_Employee" Type="int" Nullable="false" />
+          <Property Name="Full_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Role" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Hall" Type="int" />
+        </EntityType>
+        <EntityType Name="Excursion">
+          <Key>
+            <PropertyRef Name="ID_Excursion" />
+          </Key>
+          <Property Name="ID_Excursion" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="ID_Client" Type="int" />
+          <Property Name="ID_Guide" Type="int" />
+        </EntityType>
+        <EntityType Name="Exhibit">
+          <Key>
+            <PropertyRef Name="ID_Exhibit" />
+          </Key>
+          <Property Name="ID_Exhibit" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Hall" Type="int" />
+        </EntityType>
+        <EntityType Name="Guide">
+          <Key>
+            <PropertyRef Name="ID_Guide" />
+          </Key>
+          <Property Name="ID_Guide" Type="int" Nullable="false" />
+          <Property Name="Full_Name" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Employee" Type="int" />
+        </EntityType>
+        <EntityType Name="Hall">
+          <Key>
+            <PropertyRef Name="ID_Hall" />
+          </Key>
+          <Property Name="ID_Hall" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Excursion" Type="int" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Excursion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Guide" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Role" Type="int" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Employee_Hall">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="ID_Hall" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="ID_Hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Excursion_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Excursion" Type="Self.Excursion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Excursion">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Excursion_Guide">
+          <End Role="Guide" Type="Self.Guide" Multiplicity="0..1" />
+          <End Role="Excursion" Type="Self.Excursion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guide">
+              <PropertyRef Name="ID_Guide" />
+            </Principal>
+            <Dependent Role="Excursion">
+              <PropertyRef Name="ID_Guide" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exhibit_Hall">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="0..1" />
+          <End Role="Exhibit" Type="Self.Exhibit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="ID_Hall" />
+            </Principal>
+            <Dependent Role="Exhibit">
+              <PropertyRef Name="ID_Hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Guide_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Guide" Type="Self.Guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID_Employee" />
+            </Principal>
+            <Dependent Role="Guide">
+              <PropertyRef Name="ID_Employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hall_Excursion">
+          <End Role="Excursion" Type="Self.Excursion" Multiplicity="0..1" />
+          <End Role="Hall" Type="Self.Hall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excursion">
+              <PropertyRef Name="ID_Excursion" />
+            </Principal>
+            <Dependent Role="Hall">
+              <PropertyRef Name="ID_Excursion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MuseumModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Excursion" EntityType="Self.Excursion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exhibit" EntityType="Self.Exhibit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Guide" EntityType="Self.Guide" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hall" EntityType="Self.Hall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Hall" Association="Self.FK_Employee_Hall">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Excursion_Client" Association="Self.FK_Excursion_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Excursion" EntitySet="Excursion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Excursion_Guide" Association="Self.FK_Excursion_Guide">
+            <End Role="Guide" EntitySet="Guide" />
+            <End Role="Excursion" EntitySet="Excursion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exhibit_Hall" Association="Self.FK_Exhibit_Hall">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Exhibit" EntitySet="Exhibit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Guide_Employee" Association="Self.FK_Guide_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Guide" EntitySet="Guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hall_Excursion" Association="Self.FK_Hall_Excursion">
+            <End Role="Excursion" EntitySet="Excursion" />
+            <End Role="Hall" EntitySet="Hall" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MuseumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="Int32" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SecondName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Excursion" Relationship="Self.FK_Excursion_Client" FromRole="Client" ToRole="Excursion" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID_Employee" />
+          </Key>
+          <Property Name="ID_Employee" Type="Int32" Nullable="false" />
+          <Property Name="Full_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Hall" Type="Int32" />
+          <NavigationProperty Name="Hall" Relationship="Self.FK_Employee_Hall" FromRole="Employee" ToRole="Hall" />
+          <NavigationProperty Name="Guide" Relationship="Self.FK_Guide_Employee" FromRole="Employee" ToRole="Guide" />
+        </EntityType>
+        <EntityType Name="Excursion">
+          <Key>
+            <PropertyRef Name="ID_Excursion" />
+          </Key>
+          <Property Name="ID_Excursion" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="ID_Client" Type="Int32" />
+          <Property Name="ID_Guide" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Excursion_Client" FromRole="Excursion" ToRole="Client" />
+          <NavigationProperty Name="Guide" Relationship="Self.FK_Excursion_Guide" FromRole="Excursion" ToRole="Guide" />
+          <NavigationProperty Name="Hall" Relationship="Self.FK_Hall_Excursion" FromRole="Excursion" ToRole="Hall" />
+        </EntityType>
+        <EntityType Name="Exhibit">
+          <Key>
+            <PropertyRef Name="ID_Exhibit" />
+          </Key>
+          <Property Name="ID_Exhibit" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Hall" Type="Int32" />
+          <NavigationProperty Name="Hall" Relationship="Self.FK_Exhibit_Hall" FromRole="Exhibit" ToRole="Hall" />
+        </EntityType>
+        <EntityType Name="Guide">
+          <Key>
+            <PropertyRef Name="ID_Guide" />
+          </Key>
+          <Property Name="ID_Guide" Type="Int32" Nullable="false" />
+          <Property Name="Full_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Employee" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Guide_Employee" FromRole="Guide" ToRole="Employee" />
+          <NavigationProperty Name="Excursion" Relationship="Self.FK_Excursion_Guide" FromRole="Guide" ToRole="Excursion" />
+        </EntityType>
+        <EntityType Name="Hall">
+          <Key>
+            <PropertyRef Name="ID_Hall" />
+          </Key>
+          <Property Name="ID_Hall" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Excursion" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Hall" FromRole="Hall" ToRole="Employee" />
+          <NavigationProperty Name="Excursion" Relationship="Self.FK_Hall_Excursion" FromRole="Hall" ToRole="Excursion" />
+          <NavigationProperty Name="Exhibit" Relationship="Self.FK_Exhibit_Hall" FromRole="Hall" ToRole="Exhibit" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Excursion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Guide" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Role" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Excursion_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Excursion" Type="Self.Excursion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Excursion">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Hall">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="ID_Hall" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="ID_Hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Guide_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Guide" Type="Self.Guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID_Employee" />
+            </Principal>
+            <Dependent Role="Guide">
+              <PropertyRef Name="ID_Employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Excursion_Guide">
+          <End Role="Guide" Type="Self.Guide" Multiplicity="0..1" />
+          <End Role="Excursion" Type="Self.Excursion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guide">
+              <PropertyRef Name="ID_Guide" />
+            </Principal>
+            <Dependent Role="Excursion">
+              <PropertyRef Name="ID_Guide" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hall_Excursion">
+          <End Role="Excursion" Type="Self.Excursion" Multiplicity="0..1" />
+          <End Role="Hall" Type="Self.Hall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Excursion">
+              <PropertyRef Name="ID_Excursion" />
+            </Principal>
+            <Dependent Role="Hall">
+              <PropertyRef Name="ID_Excursion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exhibit_Hall">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="0..1" />
+          <End Role="Exhibit" Type="Self.Exhibit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="ID_Hall" />
+            </Principal>
+            <Dependent Role="Exhibit">
+              <PropertyRef Name="ID_Hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MuseumEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Excursion" EntityType="Self.Excursion" />
+          <EntitySet Name="Exhibit" EntityType="Self.Exhibit" />
+          <EntitySet Name="Guide" EntityType="Self.Guide" />
+          <EntitySet Name="Hall" EntityType="Self.Hall" />
+          <EntitySet Name="Registration" EntityType="Self.Registration" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Excursion_Client" Association="Self.FK_Excursion_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Excursion" EntitySet="Excursion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Hall" Association="Self.FK_Employee_Hall">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Guide_Employee" Association="Self.FK_Guide_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Guide" EntitySet="Guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Excursion_Guide" Association="Self.FK_Excursion_Guide">
+            <End Role="Guide" EntitySet="Guide" />
+            <End Role="Excursion" EntitySet="Excursion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hall_Excursion" Association="Self.FK_Hall_Excursion">
+            <End Role="Excursion" EntitySet="Excursion" />
+            <End Role="Hall" EntitySet="Hall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exhibit_Hall" Association="Self.FK_Exhibit_Hall">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Exhibit" EntitySet="Exhibit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MuseumModelContainer" CdmEntityContainer="MuseumEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="MuseumModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="First_Name" ColumnName="First Name" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="MuseumModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="ID_Employee" ColumnName="ID_Employee" />
+                <ScalarProperty Name="Full_Name" ColumnName="Full_Name" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="ID_Hall" ColumnName="ID_Hall" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Excursion">
+            <EntityTypeMapping TypeName="MuseumModel.Excursion">
+              <MappingFragment StoreEntitySet="Excursion">
+                <ScalarProperty Name="ID_Excursion" ColumnName="ID_Excursion" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="ID_Guide" ColumnName="ID_Guide" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exhibit">
+            <EntityTypeMapping TypeName="MuseumModel.Exhibit">
+              <MappingFragment StoreEntitySet="Exhibit">
+                <ScalarProperty Name="ID_Exhibit" ColumnName="ID_Exhibit" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_Hall" ColumnName="ID_Hall" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Guide">
+            <EntityTypeMapping TypeName="MuseumModel.Guide">
+              <MappingFragment StoreEntitySet="Guide">
+                <ScalarProperty Name="ID_Guide" ColumnName="ID_Guide" />
+                <ScalarProperty Name="Full_Name" ColumnName="Full_Name" />
+                <ScalarProperty Name="ID_Employee" ColumnName="ID_Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hall">
+            <EntityTypeMapping TypeName="MuseumModel.Hall">
+              <MappingFragment StoreEntitySet="Hall">
+                <ScalarProperty Name="ID_Hall" ColumnName="ID_Hall" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_Excursion" ColumnName="ID_Excursion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registration">
+            <EntityTypeMapping TypeName="MuseumModel.Registration">
+              <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Excursion" ColumnName="Excursion" />
+                <ScalarProperty Name="Guide" ColumnName="Guide" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MuseumModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
